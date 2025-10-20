@@ -1,0 +1,94 @@
+@font-face {
+    font-family: "BebasNeue";
+    src: url('/Fonts/BebasNeue-Regular.ttf') format('woff2'),
+        url('/Fonts/BebasNeue-Regular.ttf') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "RobotoCondensed";
+    src: url('/Fonts/RobotoCondensed-Regular.ttf') format('woff2'),
+        url('/Fonts/RobotoCondensed-Regular.ttf') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+:root {
+    --primary-color: #fa6a6a;
+    --secondary-color: #217510;
+    --background-color: #2e2e2e;
+    --text-color: #333;
+    --primary-font: 'BebasNeue', sans-serif;
+    --secondary-font: 'RobotoCondensed', sans-serif;
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+body {
+    line-height: 1.6;
+    background-color: #2e2e2e;
+    color: #ffffff;
+}
+
+
+
+img, svg, video {
+    max-width: 100%;
+    height: auto;
+}
+
+main, section, .container {
+    max-width: 100vw; /* nunca más ancho que la pantalla */
+    overflow-x: hidden;
+}
+
+a {
+    color: rgb(255, 255, 255);
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'BebasNeue', sans-serif;
+    letter-spacing: 0.4rem;
+    font-size: 1.4rem;
+    span {
+        color: #217510;
+    }
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #242424;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    display: flex;
+    gap: 25px;
+    font-family: 'BebasNeue', sans-serif;
+    font-size: 1.3rem;
+}
+
+
+.hero {
+    background-image: url('/img/images/');
+}
