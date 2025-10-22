@@ -24,7 +24,7 @@
     --secondary-font: 'RobotoCondensed', sans-serif;
 }
 
-
+/* Reset CSS */
 
 * {
     margin: 0;
@@ -61,6 +61,8 @@ a {
     color: rgb(255, 255, 255);
 }
 
+/* Estilos para el nav */
+
 .nav-container {
     display: flex;
     justify-content: space-between;
@@ -74,6 +76,24 @@ a {
     z-index: 1000;
 }
 
+nav ul {
+    display: flex;
+    gap: 25px;
+    font-family: 'BebasNeue', sans-serif;
+    font-size: 1.5rem;
+
+
+    & li a {
+        color: #ffffff;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: var(--secondary-color);
+        }
+    }
+}
+
+/* Logo estilos */
 .logo {
     font-weight: bold;
     color: #ffffff;
@@ -87,25 +107,7 @@ a {
 }
 
 
-nav ul {
-    display: flex;
-    gap: 25px;
-    font-family: 'BebasNeue', sans-serif;
-    font-size: 1.5rem;
-
-
-    & li a {
-        color: #ffffff;
-        transition: color 0.3s ease;
-        
-        &:hover {
-            color: var(--secondary-color);
-        }
-    }
-}
-
-
-
+/* Imagen y estilos flex para section hero  */
 .hero {
     background-image: url(../assets/images/flag-hero.jpeg);
     background-size: cover;
@@ -118,6 +120,7 @@ nav ul {
     text-align: center;
 }
 
+/*fondo arriba de la imagen para opacarla */
 .hero::before {
     content: "";
     position: absolute;
@@ -129,6 +132,7 @@ nav ul {
     z-index: 0;
 }
 
+/* Titulo y boton en section hero */
 .title-hero {
     font-family: 'BebasNeue', sans-serif;
     font-size: 3rem;
@@ -153,6 +157,8 @@ nav ul {
     cursor: pointer;
     transition: 0.3s ease;
     z-index: 1;
+    font-family: 'BebasNeue', sans-serif;
+    letter-spacing: 0.2rem;
 
     & a {
         color: #ffffff;
