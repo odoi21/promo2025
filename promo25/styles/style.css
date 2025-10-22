@@ -112,7 +112,7 @@ nav ul {
     background-image: url(../assets/images/flag-hero.jpeg);
     background-size: cover;
     background-position: center;
-    height: 100dvh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
