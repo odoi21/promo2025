@@ -1,6 +1,6 @@
 @font-face {
     font-family: "BebasNeue";
-    src: url('../src/fonts/BebasNeue-Regular.woff2') format('woff2');
+    src: url('../fonts/BebasNeue-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
     font-family: "RobotoCondensed";
-    src: url('../src/fonts/RobotoCondensed-Regular.woff2') format('woff2');
+    src: url('../fonts/RobotoCondensed-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -109,7 +109,7 @@ nav ul {
 
 /* Imagen y estilos flex para section hero  */
 .hero {
-    background-image: url(../assets/images/flag-hero.jpeg);
+    background-image: url(../assets/images/flag-hero.webp);
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -148,7 +148,7 @@ nav ul {
 .button-hero {
     position: relative;
     top: 200px;
-    padding: 15px 60px;
+    padding: 10px 70px;
     font-size: 1.8rem;
     color: #ffffff;
     background: linear-gradient(365deg, #37aa1dad 0%, #404240 97%, #3F443E 100%);
@@ -159,10 +159,6 @@ nav ul {
     z-index: 1;
     font-family: 'BebasNeue', sans-serif;
     letter-spacing: 0.2rem;
-
-    & a {
-        color: #ffffff;
-    }
 
     &:hover {
         background: linear-gradient(365deg, #217510 0%, #404240 97%, #3F443E 100%);
