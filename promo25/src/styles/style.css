@@ -75,12 +75,20 @@ a {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #1a1f1a;
+    background-color: #1a1f1a00;
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+/* Estilos al hacer scroll */
+.nav-container.scrolled {
+    background-color: #1a1f1a;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 nav ul {
@@ -135,7 +143,7 @@ nav ul {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.527);
+    background-color: rgba(0, 0, 0, 0.74);
     z-index: 0;
 }
 
@@ -177,6 +185,8 @@ nav ul {
     }
 }
 
+
+/* Estilos para la wave de abajo del hero  (separador)*/
 .wave-container {
     position: relative;
     width: 100%;
@@ -188,12 +198,22 @@ nav ul {
 }
 
 
-
+main{
+    background-color: #1a1f1a;
+}
 
 .egresados-container {
-    background-color: #1a1f1a;
+    padding: 80px 20px;
+    display: grid;
+}
+
+.egresados-container h2  {
     text-align: center;
     font-family: 'BebasNeue', sans-serif;
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     color: #ffffff;
 }
+
+
+
+
