@@ -157,6 +157,7 @@ a {
 
 /* Imagen y estilos flex para section hero  */
 .hero {
+    position: relative;
     background-image: url(../assets/images/flag-hero.webp);
     background-size: cover;
     background-position: center;
