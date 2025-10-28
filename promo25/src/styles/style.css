@@ -132,8 +132,7 @@ a {
     }
 
     .toggle-btn {
-        display: block;
-        
+        display: block;   
     }
 
     .nav-links.active {
