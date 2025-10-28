@@ -11,6 +11,8 @@ window.addEventListener('scroll', function () {
 
 // Funcionalidad del botón del responsive navbar
 function toggleMenu() {
-    const nav = document.getElementById('navLinks');
-    nav.classList.toggle('active');
+    const navLinks = document.getElementById("nav-links");
+    navLinks.classList.toggle("active");
 }
+
+window.toggleMenu = toggleMenu;
