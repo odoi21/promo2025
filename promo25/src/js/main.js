@@ -8,3 +8,9 @@ window.addEventListener('scroll', function () {
         nav.classList.remove('scrolled');
     }
 });
+
+// Funcionalidad del botón del responsive navbar
+function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    nav.classList.toggle('active');
+}
