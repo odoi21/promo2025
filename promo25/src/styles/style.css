@@ -400,3 +400,12 @@ main {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 }
+
+/* Estilos linea divisoria */
+
+hr {
+    border: 1px none;
+    height: 2px;
+    background: linear-gradient(50deg, transparent, #55a35f, transparent);
+    margin: 50px 0;
+}
