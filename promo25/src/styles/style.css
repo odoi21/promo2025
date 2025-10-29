@@ -329,6 +329,17 @@ main {
 }
 
 
+/* Estilos para la galeria de fotos */
+
+.galerry  {
+    padding: 80px 20px;
+    text-align: center;
+    font-family: 'BebasNeue', sans-serif;
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin-bottom: 70px;
+}
+
 
 
 /* Estilos para el contador regresivo Eventos */
@@ -409,3 +420,5 @@ hr {
     background: linear-gradient(50deg, transparent, #55a35f, transparent);
     margin: 50px 0;
 }
+
+
