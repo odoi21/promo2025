@@ -86,7 +86,7 @@ a {
 
 /* Estilos al hacer scroll */
 .nav-container.scrolled {
-    background-color: #1a1f1a;
+    background-color: #212b21;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
