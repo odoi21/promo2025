@@ -17,17 +17,20 @@ async function cargarEgresados() {
         const div = document.createElement('div')
         div.className = 'card'
         div.innerHTML = `
+        <a href="https://instagram.com/${card.instagram}" target="_blank" rel="noopener noreferrer">
     <div class="image">
         <img src="${card.img_url}" alt="${card.instagram}" loading="lazy" class="text" />
     </div>
     <span class="title">
-        <a href="https://instagram.com/${card.instagram}" target="_blank" rel="noopener noreferrer">
+        <p>
     @${card.instagram}
-        </a>
+        <p/>
     </span>
+    </a>
     `
         contenedor.appendChild(div)
     })
 }
 
 cargarEgresados()
+
