@@ -24,7 +24,7 @@ async function cargarGaleria() {
         const imagen = document.createElement('img')
         imagen.src = url
         imagen.alt = `imagen ${fiesta}`
-
+        imagen.loading = 'lazy'
         const texto = document.createTextNode(fiesta)
 
         card.appendChild(imagen)
