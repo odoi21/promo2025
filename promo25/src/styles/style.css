@@ -122,7 +122,7 @@ a {
     .nav-links {
         display: none;
         flex-direction: column;
-        background-color: #1a1f1a;
+        background-color: #212b21;
         position: absolute;
         top: 80px;
         right: 20px;
@@ -208,6 +208,7 @@ a {
     z-index: 1;
     font-family: 'BebasNeue', sans-serif;
     letter-spacing: 0.2rem;
+    animation: pulse 2s infinite;
 
     &:hover {
         background: linear-gradient(365deg, #217510 0%, #404240 97%, #3F443E 100%);
@@ -331,7 +332,7 @@ main {
 
 /* Estilos para la galeria de fotos */
 
-.galerry  {
+.galerry {
     padding: 80px 20px;
     text-align: center;
     font-family: 'BebasNeue', sans-serif;
@@ -340,7 +341,70 @@ main {
     margin-bottom: 70px;
 }
 
+.fotos-container {
+    padding: 2rem;
+}
 
+.fotos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.fotos-grid a {
+    position: relative;
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    
+}
+
+.fotos-grid a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.301);
+    z-index: 0;
+}
+
+.fotos-grid a:hover {
+    transform: scale(1.03);
+
+}
+
+.fotos-grid p {
+    color: #ffffff;
+    font-size: 1.8rem;
+    z-index: 1;
+    font-family: 'Bebasneue', sans-serif;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+}
+
+.fotos-grid img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+    display: block;
+}
+
+/* Responsive para pantallas chicas */
+@media (max-width: 768px) {
+    .fotos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .fotos-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
 /* Estilos para el contador regresivo Eventos */
 
@@ -350,11 +414,11 @@ main {
     font-family: 'BebasNeue', sans-serif;
     font-size: 2.5rem;
     color: #ffffff;
-    margin-bottom: 70px;
 }
 
 .span-eventos {
-    color: var(--secondary-color); }
+    color: var(--secondary-color);
+}
 
 .contador {
     margin-top: 80px;
@@ -391,6 +455,7 @@ main {
     }
 }
 
+/* Estilos para el iframe maps */
 .maps-pinar {
     margin-top: 50px;
     width: 600px;
@@ -401,7 +466,7 @@ main {
 }
 
 @media (max-width: 600px) {
-    
+
     .maps-pinar {
         margin-top: 50px;
         width: 80%;
@@ -421,4 +486,37 @@ hr {
     margin: 50px 0;
 }
 
+/* Estilos footer */
+footer {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px 10px;
+    font-family: 'RobotoCondensed', sans-serif;
+    font-size: 1rem;
+}
 
+.derechos {
+    border: 1px none;
+    height: 2px;
+    background: linear-gradient(50deg, transparent, #55a35f, transparent);
+    margin: 20px 0;
+}
+
+
+
+/*Animaciones*/
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.03);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

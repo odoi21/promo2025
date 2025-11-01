@@ -1,3 +1,5 @@
+import 'fslightbox'
+
 // Animación de scroll del header (primero transparente y luego con fondo al hacer scroll desktop)
 window.addEventListener('scroll', function () {
     const nav = document.querySelector('.nav-container');

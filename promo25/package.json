@@ -15,6 +15,7 @@
     "vite": "npm:rolldown-vite@7.1.14"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.77.0"
+    "@supabase/supabase-js": "^2.77.0",
+    "fslightbox": "^3.7.4"
   }
 }
