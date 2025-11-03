@@ -455,6 +455,25 @@ main {
     }
 }
 
+.button-event {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    padding: 12px 30px;
+    font-size: 1.5rem;
+    color: #ffffff;
+    background: linear-gradient(365deg, #37aa1dad 0%, #404240 97%, #3F443E 100%);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-family: 'BebasNeue', sans-serif;
+    letter-spacing: 0.2rem;
+    animation: pulse 2s infinite;
+    text-decoration: none;
+}
+
 /* Estilos para el iframe maps */
 .maps-pinar {
     margin-top: 50px;

@@ -21,7 +21,7 @@ async function cargarGaleria() {
         galerias[fiesta].push(url)
     })
 
-    // Orden personalizado (opcional)
+    // Orden personalizado de las fiestas
     const ordenFiestas = ['4TO', '5TO', '6TO', 'UPD' , 'BRC', 'FDE']
     const fiestasOrdenadas = Object.keys(galerias).sort(
         (a, b) => ordenFiestas.indexOf(a) - ordenFiestas.indexOf(b)
