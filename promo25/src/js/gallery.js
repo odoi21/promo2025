@@ -7,7 +7,8 @@ async function cargarGaleria() {
     const { data, error } = await supabase
         .from('galeria')
         .select('*')
-        .order('fiesta', { ascending: true })
+        .order("created_at", { ascending: true }); // más antiguas primero
+
         
     if (error) {
         console.error('Error al traer galeria:', error)

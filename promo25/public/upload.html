@@ -76,11 +76,9 @@
 
     <script type="module">
         import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
         const SUPABASE_URL = "https://ujlbhnskejfyznknyymb.supabase.co";
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVqbGJobnNrZWpmeXpua255eW1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjExNTUxMDQsImV4cCI6MjA3NjczMTEwNH0.w_-caFIVD1qoPIgaHcX_Ci1LIGvxoLdKyUxGST2DEH8";
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
         const CLAVE_CORRECTA = "2025egresados";
 
         document.getElementById("uploadForm").addEventListener("submit", async (e) => {
@@ -109,10 +107,34 @@
                 return;
             }
 
+            status.textContent = "Verificando duplicados...";
+            status.style.color = "black";
+
+            // Obtener archivos ya subidos en esa carpeta
+            const { data: existentes, error: errorExistentes } = await supabase
+                .storage
+                .from("fotosAnos")
+                .list(folder);
+
+            if (errorExistentes) {
+                status.textContent = `Error al verificar duplicados: ${errorExistentes.message}`;
+                status.style.color = "red";
+                return;
+            }
+
+            const nombresExistentes = existentes.map(f => f.name.split('-').slice(1).join('-'));
+            const archivosUnicos = files.filter(file => !nombresExistentes.includes(file.name));
+
+            if (archivosUnicos.length === 0) {
+                status.textContent = "Todas las imágenes ya fueron subidas.";
+                status.style.color = "orange";
+                return;
+            }
+
             status.textContent = "Subiendo imágenes...";
             status.style.color = "black";
 
-            for (const file of files) {
+            for (const file of archivosUnicos) {
                 await new Promise((resolve, reject) => {
                     new Compressor(file, {
                         quality: 0.6,
@@ -160,7 +182,7 @@
                 });
             }
 
-            status.textContent = "✅ Todas las imágenes fueron subidas correctamente.";
+            status.textContent = "✅ Imágenes subidas correctamente.";
             status.style.color = "green";
         });
     </script>
