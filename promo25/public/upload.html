@@ -2,25 +2,12 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Subir Fotos</title>
-    <section class="upload-section">
 
-        <h2>Subir fotos</h2>
-        <form id="uploadForm">
-            <input type="password" id="uploadKey" placeholder="Clave de acceso" required>
-            <select id="folder" required>
-                <option value="">Seleccionar carpeta</option>
-                <option value="Brc">Brc</option>
-                <option value="Upd">Upd</option>
-                <option value="Fde">Fde</option>
-            </select>
-            <input type="file" id="fileInput" accept="image/*" required>
-            <button type="submit">Subir imagen</button>
-        </form>
-        <p id="uploadStatus"></p>
-    </section>
+    <!-- Compressor.js para reducir peso de imágenes -->
+    <script src="https://cdn.jsdelivr.net/npm/compressorjs@1.2.1/dist/compressor.min.js"></script>
 
     <style>
         body {
@@ -39,9 +26,13 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            max-width: 400px;
+            width: 100%;
         }
 
-        input, select, button {
+        input,
+        select,
+        button {
             margin: 10px 0;
             padding: 10px;
             width: 100%;
@@ -58,7 +49,30 @@
         button:hover {
             background-color: #218838;
         }
+
+        #uploadStatus {
+            margin-top: 10px;
+            font-weight: bold;
+        }
     </style>
+</head>
+
+<body>
+    <section class="upload-section">
+        <h2>Subir fotos</h2>
+        <form id="uploadForm">
+            <input type="password" id="uploadKey" placeholder="Clave de acceso" required />
+            <select id="folder" required>
+                <option value="">Seleccionar carpeta</option>
+                <option value="Brc">Brc</option>
+                <option value="Upd">Upd</option>
+                <option value="Fde">Fde</option>
+            </select>
+            <input type="file" id="fileInput" accept="image/*" multiple required />
+            <button type="submit">Subir imágenes</button>
+        </form>
+        <p id="uploadStatus"></p>
+    </section>
 
     <script type="module">
         import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
@@ -74,7 +88,7 @@
 
             const keyInput = document.getElementById("uploadKey").value;
             const folder = document.getElementById("folder").value;
-            const file = document.getElementById("fileInput").files[0];
+            const files = Array.from(document.getElementById("fileInput").files);
             const status = document.getElementById("uploadStatus");
 
             if (keyInput !== CLAVE_CORRECTA) {
@@ -83,50 +97,73 @@
                 return;
             }
 
-            if (!file || !folder) {
+            if (files.length === 0 || !folder) {
                 status.textContent = "Falta seleccionar archivo o carpeta.";
-                return;
-            }
-
-            const fileName = `${folder}/${Date.now()}-${file.name}`;
-
-            //  Subir imagen al bucket
-            const { data, error: uploadError } = await supabase.storage
-                .from("fotosAnos")
-                .upload(fileName, file);
-
-            if (uploadError) {
-                status.textContent = `Error al subir: ${uploadError.message}`;
                 status.style.color = "red";
                 return;
             }
 
-            //  Obtener URL pública
-            const { data: publicUrlData } = supabase.storage
-                .from("fotosAnos")
-                .getPublicUrl(fileName);
-
-            const imageUrl = publicUrlData.publicUrl;
-
-            //  Insertar en la tabla "fotos"
-            const { error: insertError } = await supabase.from("galeria").insert([
-                {
-                    url: imageUrl,
-                    fiesta: folder,
-                },
-            ]);
-
-            if (insertError) {
-                status.textContent = `Error al guardar en DB: ${insertError.message}`;
+            if (files.length > 5) {
+                status.textContent = "Máximo 5 imágenes por subida.";
                 status.style.color = "red";
                 return;
             }
 
-            status.textContent = "✅ Imagen subida y registrada correctamente.";
+            status.textContent = "Subiendo imágenes...";
+            status.style.color = "black";
+
+            for (const file of files) {
+                await new Promise((resolve, reject) => {
+                    new Compressor(file, {
+                        quality: 0.6,
+                        maxWidth: 1600,
+                        success(compressedFile) {
+                            const fileName = `${folder}/${Date.now()}-${compressedFile.name}`;
+
+                            supabase.storage
+                                .from("fotosAnos")
+                                .upload(fileName, compressedFile)
+                                .then(({ error: uploadError }) => {
+                                    if (uploadError) {
+                                        status.textContent = `Error al subir ${file.name}: ${uploadError.message}`;
+                                        status.style.color = "red";
+                                        reject();
+                                        return;
+                                    }
+
+                                    const { data: publicUrlData } = supabase.storage
+                                        .from("fotosAnos")
+                                        .getPublicUrl(fileName);
+
+                                    const imageUrl = publicUrlData.publicUrl;
+
+                                    supabase.from("galeria").insert([
+                                        { url: imageUrl, fiesta: folder },
+                                    ]).then(({ error: insertError }) => {
+                                        if (insertError) {
+                                            status.textContent = `Error al guardar ${file.name} en DB: ${insertError.message}`;
+                                            status.style.color = "red";
+                                            reject();
+                                            return;
+                                        }
+
+                                        resolve();
+                                    });
+                                });
+                        },
+                        error(err) {
+                            status.textContent = `Error al comprimir ${file.name}: ${err.message}`;
+                            status.style.color = "red";
+                            reject();
+                        },
+                    });
+                });
+            }
+
+            status.textContent = "✅ Todas las imágenes fueron subidas correctamente.";
             status.style.color = "green";
         });
-
     </script>
-    </body>
+</body>
 
 </html>
