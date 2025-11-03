@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Fotos</title>
+    <section class="upload-section">
+
+        <h2>Subir fotos</h2>
+        <form id="uploadForm">
+            <input type="password" id="uploadKey" placeholder="Clave de acceso" required>
+            <select id="folder" required>
+                <option value="">Seleccionar carpeta</option>
+                <option value="Brc">Brc</option>
+                <option value="Upd">Upd</option>
+                <option value="Fde">Fde</option>
+            </select>
+            <input type="file" id="fileInput" accept="image/*" required>
+            <button type="submit">Subir imagen</button>
+        </form>
+        <p id="uploadStatus"></p>
+    </section>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .upload-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input, select, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+
+    <script type="module">
+        import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+        const SUPABASE_URL = "https://ujlbhnskejfyznknyymb.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVqbGJobnNrZWpmeXpua255eW1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjExNTUxMDQsImV4cCI6MjA3NjczMTEwNH0.w_-caFIVD1qoPIgaHcX_Ci1LIGvxoLdKyUxGST2DEH8";
+        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const CLAVE_CORRECTA = "2025egresados";
+
+        document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const keyInput = document.getElementById("uploadKey").value;
+            const folder = document.getElementById("folder").value;
+            const file = document.getElementById("fileInput").files[0];
+            const status = document.getElementById("uploadStatus");
+
+            if (keyInput !== CLAVE_CORRECTA) {
+                status.textContent = "Clave incorrecta ❌";
+                status.style.color = "red";
+                return;
+            }
+
+            if (!file || !folder) {
+                status.textContent = "Falta seleccionar archivo o carpeta.";
+                return;
+            }
+
+            const fileName = `${folder}/${Date.now()}-${file.name}`;
+
+            //  Subir imagen al bucket
+            const { data, error: uploadError } = await supabase.storage
+                .from("fotosAnos")
+                .upload(fileName, file);
+
+            if (uploadError) {
+                status.textContent = `Error al subir: ${uploadError.message}`;
+                status.style.color = "red";
+                return;
+            }
+
+            //  Obtener URL pública
+            const { data: publicUrlData } = supabase.storage
+                .from("fotosAnos")
+                .getPublicUrl(fileName);
+
+            const imageUrl = publicUrlData.publicUrl;
+
+            //  Insertar en la tabla "fotos"
+            const { error: insertError } = await supabase.from("galeria").insert([
+                {
+                    url: imageUrl,
+                    fiesta: folder,
+                },
+            ]);
+
+            if (insertError) {
+                status.textContent = `Error al guardar en DB: ${insertError.message}`;
+                status.style.color = "red";
+                return;
+            }
+
+            status.textContent = "✅ Imagen subida y registrada correctamente.";
+            status.style.color = "green";
+        });
+
+    </script>
+    </body>
+
+</html>
